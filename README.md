@@ -2,13 +2,6 @@
 
 一个面向 Codex 的流程治理模板，用来把 agent 约束成可规划、可追踪、可恢复、可交接的工程执行系统，而不是一次性代码生成器。
 
-这个模板默认适用于：
-
-- 需求还不完整的新功能
-- 需要分阶段推进的长期任务
-- 需要 review、QA、quality gate 的闭环开发
-- 容易中断、需要恢复上下文的仓库协作
-
 ## 初始化
 
 ```bash
@@ -17,36 +10,57 @@ git add .
 git commit -m "init codex agent template"
 ```
 
-初始化后先填写 [PROJECT_PROFILE.md](./PROJECT_PROFILE.md)，把你的真实项目命令、运行依赖、目录约定和验证入口写进去。核心治理文件不要写死具体技术栈。
+默认不要求你先手填一堆文档，也不要求你复制长提示词。直接像平时用 cc 那样说人话就行，模板会在后台自动判断是新需求、恢复还是 review。
 
-## 给 Codex 的基础入口
-
-```text
-Read AGENTS.md, WORKFLOW.md, PROJECT_PROFILE.md, STATE.md, TASKS.md, SPEC.md, PLANS.md, RISKS.md, HANDOFF.md, and the required skills under .codex/skills.
-Act as the coordinator and follow the repository workflow strictly.
-```
-
-## 固定入口提示词
-
-### 1. 新需求入口
+## 最简单用法
 
 ```text
-我有一个新的需求，但信息还不完整。请先读取 AGENTS.md、WORKFLOW.md、PROJECT_PROFILE.md、STATE.md、TASKS.md、SPEC.md、RISKS.md，然后以 coordinator 身份推进 requirement-plan。先完成需求澄清和范围收敛，不要直接写代码。
+接管这个仓库，按模板推进：做一个用户登录功能。
 ```
 
-### 2. 中断恢复入口
+## 最小输入示例
 
 ```text
-继续当前任务。请先读取 STATE.md、TASKS.md、HANDOFF.md、FAILURES.md、CHANGELOG.md、DECISIONS.md 和 RISKS.md，重建当前上下文，确认下一个正确 workflow step，然后继续推进，不要重复已经完成的阶段。
+做一个用户登录功能
 ```
-
-### 3. Review / QA 入口
 
 ```text
-请对当前改动执行 change-review 和 quality-gate。先读取 AGENTS.md、WORKFLOW.md、PROJECT_PROFILE.md、SPEC.md、PLANS.md、TASKS.md、RISKS.md、CHANGELOG.md，然后输出 findings、verdict、remaining risks 和 next action。
+继续
 ```
 
-## 目录说明
+```text
+review
+```
+
+```text
+把这个需求拆成任务
+```
+
+## 默认行为
+
+- 你直接描述一个需求，agent 默认按新任务处理
+- 你说“继续”，agent 默认按恢复流程处理
+- 你说“review”或“检查一下”，agent 默认按 review / QA 处理
+- 如果 `PROJECT_PROFILE.md` 还是空的，agent 会先自动扫描仓库并补草稿
+- 只有在关键命令、环境或业务决策无法安全推断时，agent 才会追问
+
+## 显式说法
+
+如果你想更稳，也可以用这些短句：
+
+```text
+继续当前任务
+```
+
+```text
+review 当前改动
+```
+
+```text
+按模板启动一个新需求：<需求内容>
+```
+
+## 模板内容
 
 - `.codex/skills/`: 可复用流程技能
 - `.codex/agents/`: 角色定义
@@ -64,7 +78,7 @@ Act as the coordinator and follow the repository workflow strictly.
 - `ROLLBACK.md`: 回滚预案
 - `EVALS.md` / `SCORECARD.md`: 评估与质量打分
 
-## 标准节奏
+## 后台节奏
 
 1. `requirement-plan`
 2. `technical-design`
@@ -78,6 +92,6 @@ Act as the coordinator and follow the repository workflow strictly.
 
 - `TASKS.md` 是任务事实源，`TODO.md` 只作为可选草稿区。
 - `STATE.md` 必须能让陌生 agent 在中断后恢复执行。
-- `PROJECT_PROFILE.md` 是唯一允许写入项目特定命令和环境假设的地方。
+- `PROJECT_PROFILE.md` 是唯一允许写入项目特定命令和环境假设的地方，但允许 agent 先自动生成草稿。
 - 如果需求、设计或验证信息缺失，先补文档，再决定是否继续执行。
 - 如果 workflow 没有进入 `BUILDING`，默认不应该开始编码。

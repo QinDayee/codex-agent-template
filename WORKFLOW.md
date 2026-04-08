@@ -20,7 +20,7 @@ States:
 
 ### INTAKE
 - Purpose:
-  - Accept a new request or resumed request.
+  - Accept a new request and automatically route it into the correct workflow path.
 - Required inputs:
   - AGENTS.md
   - WORKFLOW.md
@@ -30,8 +30,27 @@ States:
 - Required outputs:
   - Current goal identified
   - Correct next workflow state selected
+- Allowed actions:
+  - Infer user intent from natural language
+  - Read only the minimum additional files needed for the chosen route
+  - Auto-draft PROJECT_PROFILE.md if command or environment context is missing
 - Exit criteria:
   - Move to CLARIFY, TASKS_READY, BUILDING, or REVIEWING based on available artifacts
+
+## Intake Routing Rules
+
+- New feature, bug, or change request:
+  - Default route: `CLARIFY`
+- `继续`, `恢复`, `接着做`, `continue`, or equivalent:
+  - Default route: reconstruct context from state and handoff files, then resume from the correct state
+- `review`, `qa`, `检查`, `审一下`, or equivalent:
+  - Default route: `REVIEWING` or `QA_CHECK`, depending on whether findings already exist
+- “拆成任务”, “split into tasks”, or equivalent:
+  - Default route: `TASKS_READY`
+- If intent is ambiguous but safe to interpret:
+  - Pick the least destructive route and record the assumption
+- If intent is ambiguous and unsafe:
+  - Ask one concise clarifying question
 
 ### CLARIFY
 - Purpose:
@@ -176,7 +195,7 @@ States:
 ## Transition Rules
 
 ### INTAKE -> CLARIFY
-When the request is new or requirements are incomplete.
+When the user expresses a new task or the request is incomplete.
 
 ### CLARIFY -> SPEC_READY
 When SPEC.md clearly states scope, assumptions, open questions, and success direction.

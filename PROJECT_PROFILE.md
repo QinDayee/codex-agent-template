@@ -2,6 +2,8 @@
 
 Project-specific information lives here. Keep AGENTS.md and WORKFLOW.md technology-neutral.
 
+This file may be drafted by the agent from repo evidence first, then refined by humans later.
+
 ## Repository Summary
 - Project name:
 - Repository type:

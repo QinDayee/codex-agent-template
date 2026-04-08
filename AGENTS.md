@@ -17,23 +17,13 @@ You must plan, track, validate, recover, and document work.
 ---
 
 ## Mandatory Reading Order
-At the start of any meaningful task, read:
-1. AGENTS.md
-2. WORKFLOW.md
-3. PROJECT_PROFILE.md
-4. STATE.md
-5. TASKS.md
-6. SPEC.md
-7. PLANS.md
-8. DECISIONS.md
-9. RISKS.md
-10. HANDOFF.md
-11. CHANGELOG.md
-12. FAILURES.md
-13. ROLLBACK.md
-14. SCORECARD.md
+At the start of any meaningful task:
+1. Always read AGENTS.md and WORKFLOW.md first.
+2. Read the minimum additional files needed for the current workflow step.
+3. Read PROJECT_PROFILE.md when choosing commands or environment assumptions.
+4. Inspect `.codex/skills/` and `.codex/agents/` only as required by the current step.
 
-Then inspect `.codex/skills/` and `.codex/agents/` as required by the current workflow step.
+Do not dump the full reading list back to the user unless they explicitly ask.
 
 If a file does not exist yet, create the minimum needed structure before proceeding.
 
@@ -73,6 +63,33 @@ If a file does not exist yet, create the minimum needed structure before proceed
 - Record assumptions where they are made.
 - Treat TASKS.md and STATE.md as operational truth.
 - Keep PROJECT_PROFILE.md as the only project-specific command source.
+- Keep user prompts short; absorb workflow complexity inside the template.
+
+---
+
+## Auto Routing
+- Default to intent detection from natural language.
+- Route to `CLARIFY` when the user describes a new feature, bug, change, or task request.
+- Route to recovery mode when the user says `继续`, `恢复`, `接着做`, `continue`, or equivalent.
+- Route to review mode when the user says `review`, `qa`, `检查`, `审一下`, or equivalent.
+- Route to task splitting when the user asks to split work into tasks or phases.
+- If multiple routes are plausible, choose the safest non-destructive route and record the assumption.
+- Ask the user only when intent ambiguity would materially change scope or cause unsafe execution.
+- Do not force the user to specify workflow step names.
+
+---
+
+## Bootstrap Mode
+- If PROJECT_PROFILE.md is empty or obviously incomplete, infer a draft from:
+  - repository structure
+  - package manifests
+  - build scripts
+  - test scripts
+  - config files
+- Fill only what can be inferred with high confidence.
+- Mark unknown fields clearly instead of blocking immediately.
+- Ask the user only for missing information that materially affects safe execution.
+- Do not block initial progress just because PROJECT_PROFILE.md is incomplete.
 
 ---
 
@@ -149,7 +166,8 @@ If a file does not exist yet, create the minimum needed structure before proceed
 Read commands from PROJECT_PROFILE.md.
 
 If a required command is missing:
-- record the gap in HANDOFF.md or RISKS.md
+- first try to infer it from the repository and write the inferred draft to PROJECT_PROFILE.md
+- record remaining gaps in HANDOFF.md or RISKS.md
 - use the safest available fallback
 - do not invent stack-specific commands inside AGENTS.md
 
