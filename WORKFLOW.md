@@ -34,6 +34,7 @@ States:
   - Infer user intent from natural language
   - Read only the minimum additional files needed for the chosen route
   - Auto-draft PROJECT_PROFILE.md if command or environment context is missing
+  - Bootstrap a fresh project from the current template when requested
 - Exit criteria:
   - Move to CLARIFY, TASKS_READY, BUILDING, or REVIEWING based on available artifacts
 
@@ -41,6 +42,8 @@ States:
 
 - New feature, bug, or change request:
   - Default route: `CLARIFY`
+- “从模板开一个新项目”, “create a new project from this template”, or equivalent:
+  - Default route: bootstrap a new repo from the template, initialize git, then re-enter `INTAKE` inside the new repo
 - `继续`, `恢复`, `接着做`, `continue`, or equivalent:
   - Default route: reconstruct context from state and handoff files, then resume from the correct state
 - `review`, `qa`, `检查`, `审一下`, or equivalent:

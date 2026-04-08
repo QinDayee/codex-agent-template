@@ -69,6 +69,7 @@ If a file does not exist yet, create the minimum needed structure before proceed
 
 ## Auto Routing
 - Default to intent detection from natural language.
+- Route to template bootstrap mode when the user asks to create a new project from this template.
 - Route to `CLARIFY` when the user describes a new feature, bug, change, or task request.
 - Route to recovery mode when the user says `继续`, `恢复`, `接着做`, `continue`, or equivalent.
 - Route to review mode when the user says `review`, `qa`, `检查`, `审一下`, or equivalent.
@@ -76,6 +77,20 @@ If a file does not exist yet, create the minimum needed structure before proceed
 - If multiple routes are plausible, choose the safest non-destructive route and record the assumption.
 - Ask the user only when intent ambiguity would materially change scope or cause unsafe execution.
 - Do not force the user to specify workflow step names.
+
+---
+
+## Template Bootstrap
+- If the user asks to create a new project from this template:
+  - default the target path to a sibling directory of the current template repo when no path is provided
+  - copy the template contents into the new directory
+  - do not copy the template repo's `.git`
+  - initialize a fresh git repository on `main`
+  - create an initial commit
+  - reset new-project runtime state if template history should not carry over
+  - continue work in the new repository instead of the template repository
+- If the user also specifies a remote repository, add it only after the fresh local repo is initialized.
+- Ask only when the project name, destination, or remote intent is genuinely unclear.
 
 ---
 
@@ -170,6 +185,8 @@ If a required command is missing:
 - record remaining gaps in HANDOFF.md or RISKS.md
 - use the safest available fallback
 - do not invent stack-specific commands inside AGENTS.md
+
+For template bootstrap, prefer the repository script `scripts/new-project.ps1` when present.
 
 ---
 
