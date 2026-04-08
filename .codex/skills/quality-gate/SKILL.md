@@ -21,6 +21,7 @@ Determine whether the current phase can move forward.
 - Are known risks documented?
 - Are unresolved blockers present?
 - Is rollback information available?
+- Is the next workflow state explicit?
 
 # Output
 
@@ -39,3 +40,4 @@ Determine whether the current phase can move forward.
 - continue
 - rework
 - request user input
+- block on dependency

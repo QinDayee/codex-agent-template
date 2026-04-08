@@ -1,21 +1,43 @@
 # STATE.md
 
-Current State: INTAKE
-Current Role: Coordinator
-Current Phase: None
-Active Task: None
+## Current Goal
+- Summary:
+- Requested by:
+- Success condition:
 
-## Progress
-- Total phases: 0
-- Completed phases: 0
-- Total tasks: 0
-- Completed tasks: 0
+## Workflow Status
+- Current state: INTAKE
+- Current role: Coordinator
+- Current phase:
+- Active task:
+
+## Progress Snapshot
+- Planned phases:
+- Completed phases:
+- Planned tasks:
+- Completed tasks:
+
+## Latest Verified Check
+- Command or check:
+- Result:
+- Date:
+
+## Current Blockers
+- None recorded
 
 ## Last Completed Step
-- None
+- None recorded
 
 ## Next Recommended Step
-- Clarify requirement using requirement-plan
+- Read PROJECT_PROFILE.md and run requirement-plan if this is a new request.
+
+## Next Recommended Command or Action
+- No command recorded yet.
+
+## Files Most Recently Touched
+- None recorded
 
 ## Notes
-- Update this file after every meaningful workflow step.
+- Keep this file minimal and factual.
+- Update it after every meaningful workflow step.
+- A fresh agent should be able to resume from this file plus HANDOFF.md.

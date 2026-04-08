@@ -1,16 +1,11 @@
 # TODO.md
 
-## Current Phase
-- [ ] Not started
+This file is optional scratch space only.
 
-## Backlog
-- [ ] Clarify requirement
-- [ ] Draft design
-- [ ] Split tasks
-- [ ] Implement current phase
-- [ ] Review
-- [ ] Quality gate
-- [ ] Handoff update
+## Rules
+- TASKS.md is the authoritative task tracker.
+- Do not rely on TODO.md for status recovery.
+- Use this file only for temporary notes or rough ideas.
 
-## Done
-- [x] Template initialized
+## Scratch Notes
+- None yet.

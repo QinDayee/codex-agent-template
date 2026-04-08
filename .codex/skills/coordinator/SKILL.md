@@ -19,3 +19,6 @@ Act as the central workflow controller.
 - Never skip workflow steps.
 - Always update STATE.md.
 - Prefer safe documented progression.
+- Read PROJECT_PROFILE.md before recommending commands.
+- Require TASKS_READY before any build step.
+- Treat TASKS.md as the authoritative task source.

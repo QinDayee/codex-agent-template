@@ -16,49 +16,206 @@ States:
 - BLOCKED
 - COMPLETE
 
+## State Definitions
+
+### INTAKE
+- Purpose:
+  - Accept a new request or resumed request.
+- Required inputs:
+  - AGENTS.md
+  - WORKFLOW.md
+  - PROJECT_PROFILE.md
+  - STATE.md
+  - HANDOFF.md when resuming
+- Required outputs:
+  - Current goal identified
+  - Correct next workflow state selected
+- Exit criteria:
+  - Move to CLARIFY, TASKS_READY, BUILDING, or REVIEWING based on available artifacts
+
+### CLARIFY
+- Purpose:
+  - Turn a vague request into a scoped requirement draft.
+- Required inputs:
+  - Request details
+  - Existing repo context
+  - PROJECT_PROFILE.md
+- Required outputs:
+  - SPEC.md updated with goal, users, workflows, in-scope, out-of-scope, assumptions, open questions
+  - RISKS.md updated with requirement or dependency risks
+- Allowed actions:
+  - Explore repo
+  - Ask only high-impact business questions
+  - Document safe assumptions
+- Exit criteria:
+  - Scope, assumptions, and acceptance direction are clear enough to design
+
+### SPEC_READY
+- Purpose:
+  - Mark that requirements are ready for technical design.
+- Required inputs:
+  - Updated SPEC.md
+  - Known requirement risks
+- Required outputs:
+  - STATE.md updated to reflect spec readiness
+- Exit criteria:
+  - Technical design can begin without inventing business rules
+
+### DESIGN_READY
+- Purpose:
+  - Produce buildable design and phased plan.
+- Required inputs:
+  - SPEC.md
+  - PROJECT_PROFILE.md
+  - Existing architecture constraints
+- Required outputs:
+  - PLANS.md updated with phases, acceptance criteria, public interface changes, risks, rollback notes
+  - DECISIONS.md updated with material design choices
+- Allowed actions:
+  - Define modules, contracts, boundaries, dependencies, rollout shape
+  - Reject over-design in favor of the smallest closed loop
+- Exit criteria:
+  - Tasks can be split without further architectural ambiguity
+
+### TASKS_READY
+- Purpose:
+  - Convert the design into executable work.
+- Required inputs:
+  - SPEC.md
+  - PLANS.md
+  - DECISIONS.md
+- Required outputs:
+  - TASKS.md populated with prioritized, testable tasks
+  - STATE.md updated with current phase, active task, blockers, next command
+- Allowed actions:
+  - Split work
+  - Assign dependencies and verification method
+- Exit criteria:
+  - At least one approved task is ready to build
+
+### BUILDING
+- Purpose:
+  - Execute one approved task or one approved phase.
+- Required inputs:
+  - Active task or active phase
+  - PROJECT_PROFILE.md commands
+- Required outputs:
+  - Code or docs updated
+  - CHANGELOG.md updated
+  - STATE.md updated
+- Allowed actions:
+  - Implement
+  - Run relevant verification
+  - Document assumptions and failures
+- Exit criteria:
+  - Implementation for the current task is complete enough to review
+
+### REVIEWING
+- Purpose:
+  - Evaluate changes for correctness, regressions, and maintainability.
+- Required inputs:
+  - Current diff
+  - SPEC.md
+  - PLANS.md
+  - TASKS.md
+- Required outputs:
+  - Structured findings with severity, impact, and suggested fixes
+- Exit criteria:
+  - Either move to QA_CHECK or REWORK
+
+### QA_CHECK
+- Purpose:
+  - Decide if work is ready to proceed.
+- Required inputs:
+  - Review result
+  - Verification results
+  - Known risks
+- Required outputs:
+  - Explicit verdict
+  - Next action
+- Exit criteria:
+  - Move to PASS, REWORK, or BLOCKED
+
+### PASS
+- Purpose:
+  - Confirm the current task or phase is complete.
+- Required outputs:
+  - HANDOFF.md updated
+  - STATE.md updated
+- Exit criteria:
+  - Move to TASKS_READY if more work remains
+  - Move to COMPLETE if the planned work is done
+
+### REWORK
+- Purpose:
+  - Address review or QA findings before progressing.
+- Required outputs:
+  - Findings reflected in TASKS.md or active task notes
+- Exit criteria:
+  - Work returns to BUILDING
+
+### BLOCKED
+- Purpose:
+  - Pause execution when critical information or dependencies are missing.
+- Required outputs:
+  - FAILURES.md updated
+  - HANDOFF.md updated with blocker and next recommendation
+- Exit criteria:
+  - Missing dependency, information, or approval is resolved
+
+### COMPLETE
+- Purpose:
+  - Close the current scope.
+- Required outputs:
+  - Final handoff is clear
+  - Remaining risks are explicit
+  - Next possible work is listed if relevant
+
+---
+
 ## Transition Rules
 
 ### INTAKE -> CLARIFY
 When the request is new or requirements are incomplete.
 
 ### CLARIFY -> SPEC_READY
-When a requirement draft is clear enough to define scope and assumptions.
+When SPEC.md clearly states scope, assumptions, open questions, and success direction.
 
 ### SPEC_READY -> DESIGN_READY
-When technical design and phased implementation plan are ready.
+When technical design can proceed without guessing business rules.
 
 ### DESIGN_READY -> TASKS_READY
-When implementation tasks have been split and prioritized.
+When PLANS.md and DECISIONS.md are sufficient to split executable work.
 
 ### TASKS_READY -> BUILDING
-When there is at least one approved task or current phase to implement.
+When there is at least one approved task or current phase with explicit verification.
 
 ### BUILDING -> REVIEWING
-Immediately after implementation.
+Immediately after the scoped implementation is complete.
 
 ### REVIEWING -> QA_CHECK
-If review findings are acceptable or fixed.
+If critical findings are absent or fixed.
 
 ### REVIEWING -> REWORK
-If critical issues exist.
+If the current changes contain blocking issues.
 
 ### QA_CHECK -> PASS
-If current phase meets acceptance criteria.
+If acceptance criteria and verification are satisfied.
 
 ### QA_CHECK -> REWORK
-If quality gate fails.
+If the quality gate fails but the work is still actionable.
 
 ### Any State -> BLOCKED
-If critical information or dependency is missing.
+If required business information, dependency access, or safe execution preconditions are missing.
 
 ### PASS -> TASKS_READY
-If more tasks remain.
+If more approved tasks or phases remain.
 
 ### PASS -> COMPLETE
-If all tasks and phases are done.
+If all currently planned scope is complete.
 
 ### REWORK -> BUILDING
-After issues are addressed.
+After findings are converted into actionable work and implementation resumes.
 
 ---
 
@@ -66,6 +223,7 @@ After issues are addressed.
 Continue automatically to the next step unless:
 - essential business information is missing
 - a hard technical blocker exists
+- execution would be unsafe
 - the user explicitly stops the process
 
 ---

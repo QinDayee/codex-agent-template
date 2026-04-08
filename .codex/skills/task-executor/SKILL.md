@@ -10,12 +10,14 @@ Pick one approved task and complete it safely.
 - Only one active task at a time unless explicitly parallelized.
 - Keep implementation aligned with the current plan.
 - Update status when starting and finishing.
+- Use PROJECT_PROFILE.md for commands and verification entry points.
 
 # Required Updates
 - TASKS.md
-- TODO.md
 - CHANGELOG.md
 - STATE.md
+- HANDOFF.md when stopping after meaningful progress
+- FAILURES.md when execution or verification fails
 
 # Final Output
 Summarize:

@@ -12,6 +12,7 @@ Turn a vague business request into a structured requirement draft.
 - Ask clarifying questions when critical information is missing.
 - Prefer narrowing scope over expanding scope.
 - Focus on MVP first.
+- Update SPEC.md and RISKS.md directly.
 
 # Output
 
@@ -44,3 +45,4 @@ Update RISKS.md with requirement and dependency risks.
 
 # Stop Condition
 Do not start design or coding automatically if core ambiguity remains.
+Move to `SPEC_READY` only when SPEC.md is sufficient for technical design.

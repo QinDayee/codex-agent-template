@@ -1,6 +1,6 @@
 ---
 name: task-split
-description: Break phases or plans into prioritized executable tasks and populate TASKS.md and TODO.md.
+description: Break phases or plans into prioritized executable tasks and populate TASKS.md and STATE.md.
 ---
 
 # Goal
@@ -10,15 +10,17 @@ Convert design or plan into concrete tasks.
 - Tasks must be specific and testable.
 - Prefer smaller tasks over vague large tasks.
 - Mark dependencies clearly.
+- Each task must include done condition and verification method.
 
 # Output
 Update:
 - TASKS.md
-- TODO.md
 - STATE.md
 
 Include:
-- Todo
-- In Progress
-- Done
-- dependency notes if needed
+- backlog tasks
+- active task
+- blocked tasks when applicable
+- done tasks when completed
+- dependency notes
+- verification method

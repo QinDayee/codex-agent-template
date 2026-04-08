@@ -11,6 +11,7 @@ Transform the confirmed requirement into an implementation-ready design.
 - Favor the smallest deliverable closed loop.
 - Keep design practical and buildable.
 - Explicitly identify dependencies and acceptance criteria.
+- Update PLANS.md and DECISIONS.md directly.
 
 # Output
 
@@ -39,12 +40,18 @@ Transform the confirmed requirement into an implementation-ready design.
 Update PLANS.md with:
 - phases
 - goals
+- in scope
+- out of scope
+- public interface changes
 - dependencies
 - acceptance criteria
+- validation
+- rollback notes
 - rollout order
 
-## 6. Task List
-Update TODO.md with prioritized tasks.
+## 6. Decision Log
+Update DECISIONS.md with material design choices and tradeoffs.
 
 # Stop Condition
 Do not start coding automatically.
+Move to `DESIGN_READY` only when the design is detailed enough for task splitting.

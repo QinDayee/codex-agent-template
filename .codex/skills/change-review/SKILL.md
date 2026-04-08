@@ -25,6 +25,7 @@ For each issue include:
 - severity
 - affected area
 - why it matters
+- suggested fix
 
 ## Suggested Fixes
 List the most important corrections first.

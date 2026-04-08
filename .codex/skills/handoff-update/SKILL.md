@@ -12,6 +12,7 @@ Leave the repository in a resumable state after each meaningful step.
 - HANDOFF.md
 - DECISIONS.md when a real choice was made
 - FAILURES.md when something failed
+- RISKS.md when a new or retired risk is discovered
 
 # Output
 Summarize:

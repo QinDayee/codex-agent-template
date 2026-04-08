@@ -12,15 +12,17 @@ Implement one approved phase from PLANS.md.
 - Do not perform unrelated refactors.
 - Reuse existing project patterns.
 - Keep changes minimal but sufficient for current acceptance criteria.
+- Use PROJECT_PROFILE.md for commands and verification.
 
 # Required Steps
 1. Read AGENTS.md
-2. Read PLANS.md and identify current phase
-3. Implement only that phase
-4. Run relevant build/test/verification commands
-5. Update TODO.md
-6. Update CHANGELOG.md
-7. Update STATE.md
+2. Read PROJECT_PROFILE.md
+3. Read PLANS.md and identify current phase
+4. Implement only that phase
+5. Run relevant build/test/verification commands
+6. Update TASKS.md
+7. Update CHANGELOG.md
+8. Update STATE.md
 
 # Final Output
 Summarize:

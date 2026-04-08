@@ -1,13 +1,30 @@
 # RISKS.md
 
+Keep risks concrete and actionable. Update this file when requirements, design, execution, or release conditions introduce uncertainty.
+
 ## Requirement Risks
-- Missing business requirements
-- Unclear acceptance criteria
+### Risk ID:
+- Description:
+- Trigger:
+- Impact:
+- Mitigation:
+- Owner:
+- Status:
 
 ## Technical Risks
-- Unknown integration dependencies
-- Unknown runtime or data constraints
+### Risk ID:
+- Description:
+- Trigger:
+- Impact:
+- Mitigation:
+- Owner:
+- Status:
 
 ## Delivery Risks
-- Scope creep
-- Interrupted execution without updated handoff
+### Risk ID:
+- Description:
+- Trigger:
+- Impact:
+- Mitigation:
+- Owner:
+- Status:

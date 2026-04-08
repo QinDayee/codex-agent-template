@@ -2,16 +2,20 @@
 
 ## Failure Log
 
-### None yet
-- No recorded failures.
-- Add entries when execution fails, tests fail, design assumptions break, or blockers appear.
+Record a new entry whenever execution fails, tests fail, assumptions break, or work becomes blocked.
 
 ## Entry Template
+### Failure ID:
 - Date:
-- State:
+- Workflow state:
+- Phase:
 - Task:
-- Failure:
-- Suspected Cause:
-- Actions Tried:
-- Result:
-- Next Recommendation:
+- Trigger or reproduction:
+- Expected result:
+- Observed result:
+- Suspected cause:
+- Actions tried:
+- Evidence:
+- Current result:
+- Next recommendation:
+- Owner:
